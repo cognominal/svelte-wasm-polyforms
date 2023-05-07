@@ -7,7 +7,7 @@ export type Coords = { x: number, y: number, direction?: Direction }
 
 export let pentaminos : Pentamino[]
 
-// import { getElt, rmKids } from './dom-utils'
+// Not uses yet. Keep it as an example of using WASTM
 async function square() {
     // Load the wasm module
     const module = await WebAssembly.instantiateStreaming(fetch("square.wasm"), {});
@@ -39,11 +39,11 @@ let walk = [right, down, left, up]
 
 function equals_coords(pos1: Coords, pos2: Coords) { return pos1.x == pos2.x && pos1.y == pos2.y }
 
-// stay blanks after the fifth column will confuse the algorithm.
+// stay blanks after the fifth column or in blanks line separator will confuse the algorithm
 const pentaString = 
 `ttt
-  t
-  t
+ t
+ t
 
 u u
 uuu
@@ -85,25 +85,16 @@ nnn
 
 export function calcPentaminos() : Pentamino[]{
     const pentaStrings = pentaString.split('\n\n')
-    console.log('lenght :'+ pentaStrings.length)
-    // console.log(pentaStrings)
     pentaminos = pentaStrings.map(
-     (s) =>  calcPentaminoCoords(s) 
+        (s) =>  calcPentaminoCoords(s) 
     )
     return pentaminos
 }
-
 calcPentaminos()
 
 
 function calcPentaminoCoords(pentaString: string): Pentamino {
-    // convert the string into an array 
-    //     let pentaString =
-    //         `xx-
-    // -xx
-    // -x-`
-    // pentaString = "x\nxx"
-    // console.log(pentaString)
+    // convert the string into an array of Pentamino
     let pentamino: Pentamino = []
     let si = 0
 
@@ -159,16 +150,7 @@ export function calcPerimeter(pentamino: Pentamino) {
     function leftDirection() { return (direction + 3) % 4 }
 
 
-    // function DOMupdatePolyline() {
-    //     // svgPolyline.push(plPos)
-    //     let text = 'pos: '+ JSON.stringify(pos) + ' plPos: '+ JSON.stringify(plPos) + ' ' + direction + '\n'
-    //     console.log(text)
-    //     domCreatePolyline(svgPolyline, elt)
-    //     // let log = document.getElementById('log')
-    //     // log?.appendChild(document.createElement('br'))f
-    //     // log?.appendChild(document.createTextNode(text))
-    // }
-    function pushPointInPolyLine(init = false) {
+    function pushCoords(init = false) {
         if (init) {
             plPos = { x: pos.x, y: pos.y, direction: direction }
 
@@ -185,7 +167,7 @@ export function calcPerimeter(pentamino: Pentamino) {
     }
     firstSquarePos = pos
     firstSquareDirection = direction
-    pushPointInPolyLine(true)  // init
+    pushCoords(true)  // init
 
     while (1) {
         if (LeftOfSquareOccupied()) {
@@ -193,47 +175,15 @@ export function calcPerimeter(pentamino: Pentamino) {
             continue
         }
         while (!forwardSquareOccupied()) {
-            pushPointInPolyLine()
+            pushCoords()
             direction = rightDirection()
             if (backToBeginning()) {
                 return svgPolyline;
             }
         }
-        pushPointInPolyLine()
+        pushCoords()
         goForward()
     }
     alert('should not be here')
     return svgPolyline;
-}
-
-//#region DOM 
-// probably reinventing the wheel. Get me familiar with ts with DOM
-
-type EltGetter = string | SVGElement
-type svgAttrs = { [key: string]: string | number | boolean }
-
-
-
-
-// function domCreatePolyline(points: Coords[], pentaminoELt: HTMLElement) {
-//     // let svg = document.getElementById("svg");
-//     let gElt = document.getElementById("pentamino")! as unknown as SVGSVGElement;
-//     let polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-//     polyline.setAttribute("points", points.map(p => (p.x * squareSize) + "," + (p.y * squareSize)).join(" "));
-//     // polyline.setAttribute("points", "0,0 0,squareSize squareSize,squareSize squareSize,0 0,0")
-//     setKid(gElt, polyline);
-// }
-
-//#endregion
-
-// export function createPentamino(pentaminoElt: SVGElement, gridElt: SVGElement, pentamino : Pentamino) {
-//     grid(gridElt, 5, 5, squareSize, pentamino)
-//     // let points = calculatePolyline(pentamino)
-//     // domCreatePolyline(points)
-//     console.log('done')
-//     // console.log(points)
-// }
-
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms))
 }
