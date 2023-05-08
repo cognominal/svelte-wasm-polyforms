@@ -272,7 +272,7 @@ export function genOrientations(o: Orientation) : Orientation[] {
     orientations.push(n = rotateOrientation(n))
     orientations.push(n = rotateOrientation(n))
     orientations.push(    rotateOrientation(n))
-    return orientations!
+    return uniqueOrientations(orientations)
 }
 
 function eqOrientations(o1:Orientation, o2:Orientation) : boolean {
@@ -302,6 +302,22 @@ function normalizeOrientation(o: Orientation) {
             n[y][x] = o[y + firsty!][x + firstx]
         }
     }
-
     return n;
+}
+
+function uniqueOrientations(o: Orientation[]) : Orientation[] {
+    let u: Orientation[] = []
+    for(let i=0; i<o.length; i++) {
+        let found = false
+        for(let j=0; j<u.length; j++) {
+            if (eqOrientations(o[i], u[j])) {
+                found = true
+                break
+            }
+        }
+        if (!found) {
+            u.push(o[i])
+        }
+    }
+    return u
 }
