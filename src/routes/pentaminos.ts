@@ -221,6 +221,7 @@ export function toggleSquare(p: Pentamino, x: number, y: number,
     return pentamino
 }
 
+// empty orientation
 function newOrientation() : Orientation {
     let o: Orientation = []
     for(let i=0; i<pentaminoSize; i++) {
@@ -233,23 +234,30 @@ function newOrientation() : Orientation {
 }
 
 
-export function flipOrientation(o: Orientation)  : Orientation {
+export function flipOrientation(o: Orientation, normalize = true)  : Orientation {
     let n: Orientation = newOrientation()
     for(let i=0; i<pentaminoSize; i++) {
         for(let j=0; j<pentaminoSize; j++) {
             n[i][j] = o[pentaminoSize -1 - i][j];
         }
     }
+    if (normalize) {
+        n = normalizeOrientation(n)
+    }
     return n;
 }
 
-export function rotateOrientation(o: Orientation) : Orientation {
+export function rotateOrientation(o: Orientation, normalize = true) : Orientation {
     let n: Orientation = newOrientation()
     for(let i=0; i<pentaminoSize; i++ ) {
         for(let j=0; j<pentaminoSize; j++) {
             n[i][j] = o[pentaminoSize -1 - j][i];
         }
     }
+    if (normalize) {
+        n = normalizeOrientation(n)
+    }
+
     return n
 }
 
@@ -264,14 +272,36 @@ export function genOrientations(o: Orientation) : Orientation[] {
     orientations.push(n = rotateOrientation(n))
     orientations.push(n = rotateOrientation(n))
     orientations.push(    rotateOrientation(n))
-        return orientations!
+    return orientations!
 }
 
 function eqOrientations(o1:Orientation, o2:Orientation) : boolean {
     return o1.toString() == o2.toString()
 }
 
+// assume non empty orientation
 function normalizeOrientation(o: Orientation) {
-    let n: Orientation
-}
+    let n: Orientation = newOrientation()
+    let firstx = pentaminoSize
+    let firsty 
+    for (let y = 0; y < pentaminoSize; y++) {
+        for (let x = 0; x < pentaminoSize; x++) {
+            if (o[y][x] != ' ') {
+                if (firsty === undefined) {
+                    firsty = y
+                }
+                if (x < firstx) {
+                    firstx = x
+                }
+                break
+            }
+        }
+    }
+    for (let y = 0; y < pentaminoSize - firsty!; y++) {
+        for (let x = 0; x < pentaminoSize-firstx; x++) {
+            n[y][x] = o[y + firsty!][x + firstx]
+        }
+    }
 
+    return n;
+}
