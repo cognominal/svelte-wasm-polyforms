@@ -111,8 +111,9 @@ function calcPentaminoCoords(pentaString: string): Pentamino {
 
 export function pentaminoString(pentamino: Pentamino) {
     let s = ''
-    for (let i = 0; i < PentaminoSize; i++) {
-        for (let j = 0; j < PentaminoSize; j++) {
+    const sz = pentamino.length
+    for (let i = 0; i < sz; i++) {
+        for (let j = 0; j < sz; j++) {
             let c = pentamino[i][j]
             s+= c == ' ' ? '-' : c
         }
@@ -235,9 +236,10 @@ function newOrientation(sz = pentaminoSize) : Orientation {
 
 export function flipOrientation(o: Orientation, normalize = true)  : Orientation {
     let n: Orientation = newOrientation()
-    for(let i=0; i<pentaminoSize; i++) {
-        for(let j=0; j<pentaminoSize; j++) {
-            n[i][j] = o[pentaminoSize -1 - i][j];
+    const sz = o[0].length
+    for(let i=0; i<sz; i++) {
+        for(let j=0; j<sz; j++) {
+            n[i][j] = o[sz -1 - i][j];
         }
     }
     if (normalize) {
@@ -248,9 +250,10 @@ export function flipOrientation(o: Orientation, normalize = true)  : Orientation
 
 export function rotateOrientation(o: Orientation, normalize = true) : Orientation {
     let n: Orientation = newOrientation()
-    for(let i=0; i<pentaminoSize; i++ ) {
-        for(let j=0; j<pentaminoSize; j++) {
-            n[i][j] = o[pentaminoSize -1 - j][i];
+    let sz = o[0].length
+    for(let i=0; i<sz; i++ ) {
+        for(let j=0; j<sz; j++) {
+            n[i][j] = o[sz -1 - j][i];
         }
     }
     if (normalize) {
@@ -280,8 +283,8 @@ function eqOrientations(o1:Orientation, o2:Orientation) : boolean {
 
 // assume non empty orientation
 // offset will be use give place to augment a n-omino to generate n+1-minos
-function normalizeOrientation(o: Orientation, offset = 0) : Orientation {
-    let sz = o[0].length
+export function normalizeOrientation(o: Orientation, offset = 0) : Orientation {
+    const sz = o[0].length
     let n: Orientation = newOrientation(sz+offset)
     let firstx = sz
     let firsty 
@@ -325,5 +328,8 @@ function uniqueOrientations(o: Orientation[]) : Orientation[] {
 
 // generate n+1-ominos from n-minos
 function genPolyominoes(p: Pentamino[]) {
+    let n: Pentamino[] = []
+    n = p.map ( p => normalizeOrientation(p, 1))
+    return n
 
 }

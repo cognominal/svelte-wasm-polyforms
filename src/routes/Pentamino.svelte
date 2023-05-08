@@ -22,7 +22,7 @@
 
 <svg width="{boardSize}" height="{boardSize}" viewBox="0 0 {boardSize} {boardSize}">
         {#if mode == PentaminoMode.Board}
-            <Board boardWidth={5} boardHeight={5} squareSize pentamino={pentamino}/>
+            <Board boardWidth={5} boardHeight={5} {squareSize} pentamino={pentamino}/>
         {/if}
         <polyline points={polylinePoints(pentamino)} class="pentamino draggable">
 </svg>
