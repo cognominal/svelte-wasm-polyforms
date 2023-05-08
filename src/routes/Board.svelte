@@ -23,11 +23,11 @@
 {/each}
 
 
-{#each pentamino as item, y }
+<!-- {#each pentamino as item, y }
     {#each item as _, x}
         <rect x="{x * squareSize}" y="{y * squareSize}" width="{squareSize}" height="{squareSize}" class="{gridrectClass(y, x)}" />
     {/each}
-{/each}
+{/each} -->
 
 
 

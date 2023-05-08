@@ -1,5 +1,6 @@
 type PentaminoName = string //m& { length: 1 } TODO shut up compiler errors
 export type Pentamino = PentaminoName[][]
+type Orientation = Pentamino
 export type Coords = { x: number, y: number, direction?: Direction }
 export enum PentaminoMode { Board, Free }
 
@@ -108,6 +109,18 @@ function calcPentaminoCoords(pentaString: string): Pentamino {
     return pentamino
 }
 
+export function pentaminoString(pentamino: Pentamino) {
+    let s = ''
+    for (let i = 0; i < PentaminoSize; i++) {
+        for (let j = 0; j < PentaminoSize; j++) {
+            let c = pentamino[i][j]
+            s+= c == ' ' ? '-' : c
+        }
+        s += '<br>'
+    }
+    return s + '<p/>'
+}
+
 function connexParts(pentamino: Pentamino) {
     
 }
@@ -164,14 +177,23 @@ export function calcPerimeter(pentamino: Pentamino) {
         // the polyline direction is right orthogonal to the direction
     }
     
-    while (!isOccupied()) {
-        pos = forwardSquarePos()
-    }
-    firstSquarePos = pos
-    firstSquareDirection = direction
+    loop:
+        for (let y = 0; y < pentaminoSize; y++) {
+            for (let x = 0; x < pentaminoSize; x++) {
+                if (pentamino[y][x] != ' ') {
+                    pos = { x, y }
+                    break loop
+                }
+            }
+        }
+
+        firstSquarePos = { x: pos.x, y: pos.y }
+        firstSquareDirection = Direction.Right
     pushCoords(true)  // init
 
+    let i = 0
     while (1) {
+        i++
         if (LeftOfSquareOccupied()) {
             goLeft()
             continue
@@ -198,3 +220,58 @@ export function toggleSquare(p: Pentamino, x: number, y: number,
     pentamino[y][x] = pentamino[y][x] == ' ' ? 'X' : ' '
     return pentamino
 }
+
+function newOrientation() : Orientation {
+    let o: Orientation = []
+    for(let i=0; i<pentaminoSize; i++) {
+        o[i] = []
+        for(let j=0; j<pentaminoSize; j++) {
+            o[i][j] = ' '
+        }
+    }
+    return o
+}
+
+
+export function flipOrientation(o: Orientation)  : Orientation {
+    let n: Orientation = newOrientation()
+    for(let i=0; i<pentaminoSize; i++) {
+        for(let j=0; j<pentaminoSize; j++) {
+            n[i][j] = o[pentaminoSize -1 - i][j];
+        }
+    }
+    return n;
+}
+
+export function rotateOrientation(o: Orientation) : Orientation {
+    let n: Orientation = newOrientation()
+    for(let i=0; i<pentaminoSize; i++ ) {
+        for(let j=0; j<pentaminoSize; j++) {
+            n[i][j] = o[pentaminoSize -1 - j][i];
+        }
+    }
+    return n
+}
+
+export function genOrientations(o: Orientation) : Orientation[] {
+    let orientations : Orientation[] = []
+    let n, Orientation
+    orientations.push(o)
+    orientations.push(n = rotateOrientation(o))
+    orientations.push(n = rotateOrientation(n))
+    orientations.push(n = rotateOrientation(n))
+    orientations.push(n = flipOrientation(n))
+    orientations.push(n = rotateOrientation(n))
+    orientations.push(n = rotateOrientation(n))
+    orientations.push(    rotateOrientation(n))
+        return orientations!
+}
+
+function eqOrientations(o1:Orientation, o2:Orientation) : boolean {
+    return o1.toString() == o2.toString()
+}
+
+function normalizeOrientation(o: Orientation) {
+    let n: Orientation
+}
+
