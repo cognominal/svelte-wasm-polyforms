@@ -25,7 +25,6 @@
         {/if}
         <polyline points={polylinePoints(pentamino)} class="pentamino draggable">
 </svg></p>
-    <p id="log"></p>
 
 <style>
     .pentamino {
