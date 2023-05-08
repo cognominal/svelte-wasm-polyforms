@@ -3,7 +3,7 @@
 <ul>
   <li><a href="/">Pentamino Puzzle</a></li>
   <li><a href="list-pentaminos">List pentaminos</a></li>
-  <li><a href="flip-rotate">testing flip-rotate</a></li>
+  <li><a href="gen-polyominos">generate unique polyominos</a></li>
 </ul>
 
 <slot/>
