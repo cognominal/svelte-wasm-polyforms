@@ -9,7 +9,7 @@
 <slot/>
 
 <div class="trailer">
-Using SvelteKit.<br/>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation.
+Using SvelteKit. Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation.
 </div>
 
 <style>
