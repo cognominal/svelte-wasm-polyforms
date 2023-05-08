@@ -5,7 +5,8 @@
     import { onMount } from 'svelte'
     export let pentamino: Pentamino
     export let mode: PentaminoMode = PentaminoMode.Free
-    export let squareSize = 5
+    export let squareSize = 8
+    let boardSize = 5*squareSize
     let pentaminoElt : SVGElement
     let gridElt : SVGElement
 
@@ -19,7 +20,7 @@
 
 
 
-<p><svg width="200" height="200" viewBox="-50 -50 150 150">
+<p><svg width="{boardSize}" height="{boardSize}" viewBox="0 0 {boardSize} {boardSize}">
         {#if mode == PentaminoMode.Board}
             <Board boardWidth={5} boardHeight={5} squareSize pentamino={pentamino}/>
         {/if}
