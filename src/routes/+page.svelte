@@ -11,9 +11,6 @@ let pentaminos = calcPentaminos()
   </p>
 {/each}
 
-<ul>
-  <li><a href="list-pentaminos">List pentaminos</a></li>
-</ul>
 
 
 <p>using SvelteKit<p>
