@@ -108,6 +108,9 @@ function calcPentaminoCoords(pentaString: string): Pentamino {
     return pentamino
 }
 
+function connexParts(pentamino: Pentamino) {
+    
+}
 
 export function calcPerimeter(pentamino: Pentamino) {
 
@@ -185,4 +188,13 @@ export function calcPerimeter(pentamino: Pentamino) {
     }
     alert('should not be here')
     return svgPolyline;
+}
+
+
+// return Pentamino| boolean because we will enforce connexity
+export function toggleSquare(p: Pentamino, x: number, y: number, 
+    enforceConnexity = true) : Pentamino | boolean {
+    let pentamino = pentaminos[0]
+    pentamino[y][x] = pentamino[y][x] == ' ' ? 'X' : ' '
+    return pentamino
 }
