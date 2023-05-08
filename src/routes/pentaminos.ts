@@ -222,17 +222,16 @@ export function toggleSquare(p: Pentamino, x: number, y: number,
 }
 
 // empty orientation
-function newOrientation() : Orientation {
+function newOrientation(sz = pentaminoSize) : Orientation {
     let o: Orientation = []
-    for(let i=0; i<pentaminoSize; i++) {
+    for(let i=0; i<sz; i++) {
         o[i] = []
-        for(let j=0; j<pentaminoSize; j++) {
+        for(let j=0; j<sz; j++) {
             o[i][j] = ' '
         }
     }
     return o
 }
-
 
 export function flipOrientation(o: Orientation, normalize = true)  : Orientation {
     let n: Orientation = newOrientation()
@@ -280,12 +279,14 @@ function eqOrientations(o1:Orientation, o2:Orientation) : boolean {
 }
 
 // assume non empty orientation
-function normalizeOrientation(o: Orientation) {
-    let n: Orientation = newOrientation()
-    let firstx = pentaminoSize
+// offset will be use give place to augment a n-omino to generate n+1-minos
+function normalizeOrientation(o: Orientation, offset = 0) : Orientation {
+    let sz = o[0].length
+    let n: Orientation = newOrientation(sz+offset)
+    let firstx = sz
     let firsty 
-    for (let y = 0; y < pentaminoSize; y++) {
-        for (let x = 0; x < pentaminoSize; x++) {
+    for (let y = 0; y < sz; y++) {
+        for (let x = 0; x < sz; x++) {
             if (o[y][x] != ' ') {
                 if (firsty === undefined) {
                     firsty = y
@@ -297,9 +298,9 @@ function normalizeOrientation(o: Orientation) {
             }
         }
     }
-    for (let y = 0; y < pentaminoSize - firsty!; y++) {
-        for (let x = 0; x < pentaminoSize-firstx; x++) {
-            n[y][x] = o[y + firsty!][x + firstx]
+    for (let y = 0; y < sz - firsty!; y++) {
+        for (let x = 0; x < sz-firstx; x++) {
+            n[y+offset][x+offset] = o[y + firsty!][x + firstx]
         }
     }
     return n;
@@ -320,4 +321,9 @@ function uniqueOrientations(o: Orientation[]) : Orientation[] {
         }
     }
     return u
+}
+
+// generate n+1-ominos from n-minos
+function genPolyominoes(p: Pentamino[]) {
+
 }
