@@ -1,9 +1,10 @@
 <script lang="ts">
     import { calcPerimeter }  from './pentaminos'
-    import type { Pentamino, Coords } from './pentaminos'
-    import Grid from './Grid.svelte'
+    import { type Pentamino, type Coords, PentaminoMode } from './pentaminos'
+    import Board from './Board.svelte'
     import { onMount } from 'svelte'
-    export let pentamino: Pentamino 
+    export let pentamino: Pentamino
+    export let mode: PentaminoMode = PentaminoMode.Free
     let pentaminoElt : SVGElement
     let gridElt : SVGElement
     let squareSize = 20
@@ -19,7 +20,9 @@
 
 
 <p><svg width="200" height="200" viewBox="-50 -50 150 150">
-        <Grid boardWidth={5} boardHeight={5} squareSize={20} pentamino={pentamino}/>
+        {#if mode == PentaminoMode.Free}
+            <Board boardWidth={5} boardHeight={5} squareSize={20} pentamino={pentamino}/>
+        {/if}
         <polyline points={polylinePoints(pentamino)} class="pentamino draggable">
 </svg></p>
     <p id="log"></p>

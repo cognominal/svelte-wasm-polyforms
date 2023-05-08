@@ -1,8 +1,7 @@
-export let un = 1
-export let deux = 2
 type PentaminoName = string //m& { length: 1 } TODO shut up compiler errors
 export type Pentamino = PentaminoName[][]
 export type Coords = { x: number, y: number, direction?: Direction }
+export enum PentaminoMode { Board, Free }
 
 
 export let pentaminos : Pentamino[]
@@ -67,9 +66,9 @@ zz
  z
  zz
 
-  ff
  ff
-  f
+ff
+ f
 
 iiiii
 
