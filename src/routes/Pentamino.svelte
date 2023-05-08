@@ -5,9 +5,9 @@
     import { onMount } from 'svelte'
     export let pentamino: Pentamino
     export let mode: PentaminoMode = PentaminoMode.Free
+    export let squareSize = 5
     let pentaminoElt : SVGElement
     let gridElt : SVGElement
-    let squareSize = 20
 
     function polylinePoints(pentomino: Pentamino) {
         let perimeter = calcPerimeter(pentamino);
@@ -20,8 +20,8 @@
 
 
 <p><svg width="200" height="200" viewBox="-50 -50 150 150">
-        {#if mode == PentaminoMode.Free}
-            <Board boardWidth={5} boardHeight={5} squareSize={20} pentamino={pentamino}/>
+        {#if mode == PentaminoMode.Board}
+            <Board boardWidth={5} boardHeight={5} squareSize pentamino={pentamino}/>
         {/if}
         <polyline points={polylinePoints(pentamino)} class="pentamino draggable">
 </svg></p>
