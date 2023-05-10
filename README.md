@@ -7,6 +7,9 @@ Next step. Dragging, flipping and rotating pentominos
 into a rectangle. For people to manually solve
 the 3x20, 4x15, 5x12, 6x10 tiling problems.
 
+As usual I have gone sideways. I have written a [note](implementation.README.md) on implementing
+more than pentominos.
+
 To see how to install [sveltekit-README.md](./sveltekit-README.md)
 
 implementation details:
