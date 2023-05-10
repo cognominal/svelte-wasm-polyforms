@@ -50,7 +50,7 @@ tile in its original orientation (t for template) and `otile` for an oriented
 tile, and `ftile` for an otile fitted on a board. A ttile is just an otile
 representative of a set of equivalent otiles modulo rotations and flips.
 
-An otile is composed of cells. Each cell has a type representated by an
+An otile is composed of cells. Each cell has a type represented by an
 integer, and a relative position in the otile. In a board with ftiles each cell
 of a ftile has a position in the board.
 
