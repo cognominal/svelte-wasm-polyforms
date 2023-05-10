@@ -2,11 +2,14 @@ I intend to support problems involving polyforms including polyominos instead
 of only pentaminos. According to the wikipedia "a polyform is a plane figure or
 solid compound constructed by joining together identical basic polygons".
 
+I intend to create a sveltekit application with a rich UI but this document
+focuses on the necessary data structure not the UI per se. But, If I am
+successful in developping a rich and versatil enough UI, it should be used to
+create SVGs to annotate this document.
+
 [Tangram](https://en.wikipedia.org/wiki/Tangram) is a diferent set of problems
-because the shape to be filled don't necessarily fit in a grid but it can
-benefit from an user interface similar to what I develop. If I am successful in
-developping a rich enough UI, it should be used to create SVGs to annotate this
-document.
+because the shape to be filled doesn't necessarily fit in a grid but it can
+benefit from an user interface similar to what I develop. 
 
 The polyforms problems are: 
 
@@ -16,7 +19,7 @@ The polyforms problems are:
 of polyforms (tiles for shorts), tiling them in a way without overlaps so as to
 fill a board.
 
-For 2., there are many variants which deserves a definition which does not
+For 2., there are many variants which deserve a definition that does not
 fit in that introduction.
 
 # the broad lines of the implementation
@@ -73,17 +76,21 @@ square the cells thare are owned by the square.
 
 Each type of polyform has a driver to drive the general algorithm.
 
-# perimeter
+# nice but unecessay perimeter path
+
+... as opposed to perimeter line segments
 
 The perimeter of a polyform is a consecutive sequence of line segments that
 defines the boundary of a polyform. It is useful because it allows to 
 generate a SVG path or a SVG polyline and highlight the polyform on hover.
-It is quite easy to generate the line segments of a perimeter bt more
-difficult to generate it as a consecutive sequence. So it seems many            people choose to use different colors for different polyforms avoiding to
+It is quite easy to generate the line segments of a perimeter but more
+difficult to generate it as a consecutive sequence. So it seems many people            people choose to use different colors for different polyforms avoiding to
 draw perimeters to show tiling with polyforms.
 I had implemented the perimeter for polyominos but we can skip that
 representation for a while to implement and represent polyform problems
 at the cost of losing js-less highlighting on hover.
+Perimeter line segments are alos sufficient to caculate n-polyforms from
+n-1-polyforms.
 
 # flattened tile
 
