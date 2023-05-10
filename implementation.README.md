@@ -43,7 +43,7 @@ problem board. The possible rotations are specific to the polyform type. For
 [polyominos](https://en.wikipedia.org/wiki/Polyomino) the rotations are
 multiple of 90 degrees, for
 [polyalmonds](https://en.wikipedia.org/wiki/Polyiamond) multiple of 120, for
-[polyabolos](https://en.wikipedia.org/wiki/Polyabolo) multiple of 45 and for
+[polyabolos](https://en.wikipedia.org/wiki/Polyabolo) multiple of 90 and for
 [polyhexes](https://en.wikipedia.org/wiki/Polyhex) multiple of 30 and so on.
 Some rotations and flips can lead to equivalent tiles. We say `ttile` for a
 tile in its original orientation (t for template) and `otile` for an oriented
